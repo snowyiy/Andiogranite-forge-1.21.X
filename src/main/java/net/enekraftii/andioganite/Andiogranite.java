@@ -1,6 +1,7 @@
 package net.enekraftii.andioganite;
 
 import com.mojang.logging.LogUtils;
+import net.enekraftii.andioganite.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
@@ -44,6 +45,7 @@ public class Andiogranite {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
+        ModItems.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -57,7 +59,9 @@ public class Andiogranite {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.STONE_BOOK);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
